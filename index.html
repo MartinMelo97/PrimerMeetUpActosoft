@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<title>ActoSoft</title>
+</head>
+<body>
+	<div>
+		<ul id="chat">
+			
+		</ul>
+	</div>
+	<input type="text" id="mensaje">
+	<button id="botoncito">Puchame papu</button>
+
+	<script
+  	src="https://code.jquery.com/jquery-3.2.1.min.js"
+  	integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  	crossorigin="anonymous"></script>
+ 
+
+	<script src="https://www.gstatic.com/firebasejs/3.7.6/firebase.js"></script>
+	<script>
+	  // Initialize Firebase
+	  var config = {
+	    apiKey: "AIzaSyDPlMjJ9UwKQJhBE8uBeetrrDryVfICilc",
+	    authDomain: "actosoft-1626e.firebaseapp.com",
+	    databaseURL: "https://actosoft-1626e.firebaseio.com",
+	    projectId: "actosoft-1626e",
+	    storageBucket: "actosoft-1626e.appspot.com",
+	    messagingSenderId: "27955758710"
+	  };
+	  firebase.initializeApp(config);
+	</script>
+	<script>
+		var db = firebase.database();
+
+		$(document).ready(function(){
+			db.ref('mensajes').on('child_added', function(data){
+				//console.log(data.val().mensajes);
+				$('#chat').append('<li>'+data.val().mensajes+'</li>');
+			});
+		});
+		$('#botoncito').on('click',function(){
+			var mensaje = $('#mensaje').val();
+			db.ref('mensajes').push({
+				mensajes:mensaje
+			});
+			$('#mensaje').val('');
+		});
+	
+	</script>
+
+</body>
+</html>
