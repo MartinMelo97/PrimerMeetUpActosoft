@@ -3,21 +3,36 @@
 <head>
 	<meta charset="UTF-8">
 	<title>ActoSoft</title>
+	  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/css/materialize.min.css">
+	  <style>
+	  	.m4{
+	  		position: fixed;
+	  	}
+	  	.btn{
+	  		top:10%;
+	  	}
+	  </style>
+
 </head>
 <body>
-	<div>
-		<ul id="chat">
-			
-		</ul>
+	<div class="row">
+		<div class="col m8" style="background-color:red;">
+			<ul id="chat">
+				
+			</ul>
+		</div>
+			<input type="text" id="mensaje" class="col m4">
+			<button id="botoncito" class="waves-effect waves-light btn col m4">Puchame papu</button>
+		</div>
 	</div>
-	<input type="text" id="mensaje">
-	<button id="botoncito">Puchame papu</button>
 
 	<script
   	src="https://code.jquery.com/jquery-3.2.1.min.js"
   	integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
   	crossorigin="anonymous"></script>
  
+ 	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/js/materialize.min.js"></script>
+
 
 	<script src="https://www.gstatic.com/firebasejs/3.7.6/firebase.js"></script>
 	<script>
@@ -31,6 +46,7 @@
 	    messagingSenderId: "27955758710"
 	  };
 	  firebase.initializeApp(config);
+
 	</script>
 	<script>
 		var db = firebase.database();
@@ -38,7 +54,8 @@
 		$(document).ready(function(){
 			db.ref('mensajes').on('child_added', function(data){
 				//console.log(data.val().mensajes);
-				$('#chat').append('<li>'+data.val().mensajes+'</li>');
+				$('#chat').append('<li class="chip">'+data.val().mensajes+'</li><br>');
+				$("html, body").animate({ scrollTop: $(document).height() }, 1000);
 			});
 		});
 		$('#botoncito').on('click',function(){
@@ -50,6 +67,5 @@
 		});
 	
 	</script>
-
 </body>
 </html>
